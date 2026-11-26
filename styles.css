@@ -225,6 +225,63 @@ button:focus-visible,
   cursor: pointer;
   font-weight: 700;
 }
+.reader__status {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.35rem, 2vw, 0.8rem);
+}
+.music-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    color 0.35s,
+    background-color 0.35s,
+    border-color 0.35s,
+    opacity 0.2s;
+}
+.music-toggle__icon {
+  position: relative;
+  color: var(--accent);
+  font-family: Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.music-toggle[aria-pressed="false"] {
+  opacity: 0.68;
+  background: transparent;
+}
+.music-toggle[aria-pressed="false"] .music-toggle__icon::after {
+  content: "";
+  position: absolute;
+  inset: 50% -0.12rem auto;
+  height: 1.5px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+.music-toggle.is-loading .music-toggle__icon {
+  animation: music-pulse 1.1s ease-in-out infinite alternate;
+}
+.music-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+@keyframes music-pulse {
+  to { opacity: 0.38; }
+}
 .brand i {
   color: var(--accent);
   font-family: "Pinar Local";
@@ -239,6 +296,23 @@ button:focus-visible,
   display: flex;
   align-items: center;
   gap: 4px;
+}
+
+@media (max-width: 390px) {
+  .music-toggle__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .music-toggle {
+    padding-inline: 0.55rem;
+  }
 }
 .chapter-count b {
   color: var(--accent);

@@ -5,6 +5,7 @@
 window.LOVE_STORIES = [
   {
     id: "ancient-persia",
+    audio: "assets/music/01.m4a",
     image: "assets/story/01-achaemenid.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل اول · توطئه در تخت جمشید",
@@ -26,6 +27,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "ancient-greece",
+    audio: "assets/music/02.m4a",
     image: "assets/story/02-athens.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل دوم · بازآفرینی اُرفِئوس و یوریدِسی",
@@ -47,6 +49,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "old-japan",
+    audio: "assets/music/03.m4a",
     image: "assets/story/03-edo-kyoto.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل سوم · افسانه‌ی تاناباتا",
@@ -68,6 +71,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "old-korea",
+    audio: "assets/music/04.m4a",
     image: "assets/story/04-joseon.webp",
     imagePosition: "center 5%",
     imageFit: "cover",
@@ -90,6 +94,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "knight-princess",
+    audio: "assets/music/05.m4a",
     image: "assets/story/05-medieval.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل پنجم · افسانه‌ی اژدهای بی‌گناه",
@@ -111,6 +116,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "enchanted-world",
+    audio: "assets/music/06.m4a",
     image: "assets/story/06-fantasy.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل ششم · افسانه‌ی خورشید دزدیده‌شده",
@@ -132,6 +138,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "cyberpunk",
+    audio: "assets/music/07.m4a",
     image: "assets/story/07-cyberpunk.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل هفتم · سرقت از خزانه‌ی خاطره‌ها",
@@ -153,6 +160,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "zombie-world",
+    audio: "assets/music/08.m4a",
     image: "assets/story/08-zombie.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل هشتم · افسانه‌ی آخرین فرکانس",
@@ -174,6 +182,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "spider-verse",
+    audio: "assets/music/09.m4a",
     image: "assets/story/09-spider-rooftop.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل نهم · بازآفرینی یک رویداد کانونی",
@@ -195,6 +204,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "wild-west",
+    audio: "assets/music/10.m4a",
     image: "assets/story/10-outlaw.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل دهم · افسانه‌ی یاغی و جایزه‌بگیر",
@@ -216,6 +226,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "gta-vi",
+    audio: "assets/music/11.m4a",
     image: "assets/story/11-vice-city.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل یازدهم · بازآفرینی جِیسون و لوسیا",
@@ -237,6 +248,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "our-reality",
+    audio: "assets/music/12.m4a",
     futureFrame: {
       title: "جای این عکس هنوز خالیه...",
       body: "چون این یکی رو نمی‌شه ساخت یا از جایی پیدا کرد. باید یک روز واقعاً کنار هم بایستیم و خودمون بگیریمش.",

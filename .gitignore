@@ -5,3 +5,9 @@ Thumbs.db
 # High-resolution source artwork stays local; optimized WebP files are deployed.
 assets/story/*.jpg
 assets/story/*.png
+
+# Local listening samples; never deploy these full-size candidate tracks.
+music-candidates/
+
+# Full-length source songs stay local; only the optimized 70-second cuts are deployed.
+/Music/

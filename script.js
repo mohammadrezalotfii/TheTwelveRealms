@@ -18,6 +18,7 @@
   const totalNumber = document.querySelector('#total-number');
   const liveRegion = document.querySelector('#live-region');
   const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const musicToggle = document.querySelector('#music-toggle');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let current = 0;
@@ -28,6 +29,10 @@
   let pointerDeltaX = 0;
   let dragging = false;
   let gestureAxis = 'idle';
+  let musicEnabled = true;
+  let activeAudio = null;
+  let activeAudioIndex = -1;
+  const targetMusicVolume = 0.52;
 
   const faNumber = (number) => new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(number);
 
@@ -123,6 +128,111 @@
     });
   };
 
+  const setMusicUI = (state = 'ready') => {
+    const enabled = musicEnabled;
+    musicToggle.setAttribute('aria-pressed', String(enabled));
+    musicToggle.classList.toggle('is-loading', enabled && state === 'loading');
+    const label = enabled ? 'قطع موسیقی' : 'پخش موسیقی';
+    musicToggle.setAttribute('aria-label', label);
+    musicToggle.title = label;
+  };
+
+  const fadeAudio = (audio, destination, duration, onComplete) => {
+    if (!audio) return;
+    if (audio._fadeFrame) cancelAnimationFrame(audio._fadeFrame);
+    const startVolume = audio.volume;
+    const startedAt = performance.now();
+    const safeDuration = reduceMotion ? 40 : duration;
+
+    const step = (now) => {
+      const progress = Math.min(1, (now - startedAt) / safeDuration);
+      const nextVolume = startVolume + (destination - startVolume) * progress;
+      audio.volume = Math.max(0, Math.min(1, nextVolume));
+      if (progress < 1) audio._fadeFrame = requestAnimationFrame(step);
+      else {
+        audio._fadeFrame = 0;
+        onComplete?.();
+      }
+    };
+    audio._fadeFrame = requestAnimationFrame(step);
+  };
+
+  const discardAudio = (audio, immediate = false) => {
+    if (!audio) return;
+    const finish = () => {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+    };
+    if (immediate) finish();
+    else fadeAudio(audio, 0, 650, finish);
+  };
+
+  const switchStoryAudio = (index) => {
+    const source = stories[index]?.audio;
+    if (!started || !source) return;
+
+    if (!musicEnabled) {
+      if (activeAudioIndex !== index) {
+        discardAudio(activeAudio, true);
+        activeAudio = null;
+        activeAudioIndex = -1;
+      }
+      return;
+    }
+
+    if (activeAudio && activeAudioIndex === index) {
+      if (activeAudio.ended) activeAudio.currentTime = 0;
+      setMusicUI(activeAudio.readyState < 3 ? 'loading' : 'playing');
+      activeAudio.play().then(() => fadeAudio(activeAudio, targetMusicVolume, 700)).catch(() => setMusicUI('ready'));
+      return;
+    }
+
+    const previousAudio = activeAudio;
+    const audio = new Audio(source);
+    audio.preload = 'none';
+    audio.playsInline = true;
+    audio.volume = 0;
+    activeAudio = audio;
+    activeAudioIndex = index;
+    setMusicUI('loading');
+
+    audio.addEventListener('playing', () => {
+      if (audio !== activeAudio || !musicEnabled) return;
+      setMusicUI('playing');
+      fadeAudio(audio, targetMusicVolume, 1200);
+    });
+    audio.addEventListener('waiting', () => {
+      if (audio === activeAudio && musicEnabled) setMusicUI('loading');
+    });
+    audio.addEventListener('ended', () => {
+      if (audio === activeAudio) setMusicUI('ready');
+    });
+    audio.addEventListener('error', () => {
+      if (audio === activeAudio) setMusicUI('ready');
+    });
+
+    discardAudio(previousAudio);
+    audio.play().catch(() => setMusicUI('ready'));
+  };
+
+  const stopStoryAudio = (immediate = false) => {
+    discardAudio(activeAudio, immediate);
+    activeAudio = null;
+    activeAudioIndex = -1;
+    setMusicUI('ready');
+  };
+
+  const toggleMusic = () => {
+    musicEnabled = !musicEnabled;
+    setMusicUI(musicEnabled ? 'loading' : 'ready');
+    if (musicEnabled) switchStoryAudio(current);
+    else if (activeAudio) {
+      const audio = activeAudio;
+      fadeAudio(audio, 0, 450, () => audio.pause());
+    }
+  };
+
   function goTo(index, announce = true) {
     const nextIndex = Math.max(0, Math.min(stories.length - 1, index));
     const chapterChanged = nextIndex !== current;
@@ -147,6 +257,7 @@
     history.replaceState(null, '', `#${story.id}`);
     document.title = `${story.title} — رضا برای عسل`;
     if (announce) liveRegion.textContent = `فصل ${faNumber(current + 1)} از ${faNumber(stories.length)}، ${story.title}`;
+    switchStoryAudio(current);
   }
 
   const start = () => {
@@ -163,8 +274,9 @@
   };
 
   const restart = () => {
-    goTo(0, false);
     started = false;
+    stopStoryAudio();
+    goTo(0, false);
     endingOpen = false;
     ending.classList.remove('is-visible');
     ending.setAttribute('aria-hidden', 'true');
@@ -179,6 +291,7 @@
 
   const showEnding = () => {
     started = false;
+    stopStoryAudio();
     endingOpen = true;
     reader.setAttribute('aria-hidden', 'true');
     ending.classList.add('is-visible');
@@ -259,6 +372,7 @@
   reader.setAttribute('aria-hidden', 'true');
 
   startButton.addEventListener('click', start);
+  musicToggle.addEventListener('click', toggleMusic);
   restartButton.addEventListener('click', restart);
   endingRestartButton.addEventListener('click', restart);
   nextButton.addEventListener('click', next);
@@ -267,6 +381,12 @@
   viewport.addEventListener('pointermove', pointerMove);
   viewport.addEventListener('pointerup', pointerUp);
   viewport.addEventListener('pointercancel', pointerCancel);
+
+  document.addEventListener('visibilitychange', () => {
+    if (!activeAudio || !musicEnabled) return;
+    if (document.hidden) activeAudio.pause();
+    else if (started) activeAudio.play().catch(() => {});
+  });
 
   document.addEventListener('keydown', (event) => {
     if (endingOpen && event.key === 'Escape') {
