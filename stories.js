@@ -5,7 +5,7 @@
 window.LOVE_STORIES = [
   {
     id: "ancient-persia",
-    image: "assets/story/01-achaemenid.jpg",
+    image: "assets/story/01-achaemenid.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل اول · بازآفرینی زال و رودابه",
     title: "شبی که رودابه گیسوانش را از برج رها کرد",
@@ -26,7 +26,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "ancient-greece",
-    image: "assets/story/02-athens.jpg",
+    image: "assets/story/02-athens.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل دوم · بازآفرینی اُرفِئوس و یوریدِسی",
     title: "آوازی که راهش را تا جهان مردگان پیدا کرد",
@@ -47,7 +47,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "old-japan",
-    image: "assets/story/03-edo-kyoto.jpg",
+    image: "assets/story/03-edo-kyoto.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل سوم · افسانه‌ی تاناباتا",
     title: "دو ستاره در دو سوی رود آسمان",
@@ -68,7 +68,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "old-korea",
-    image: "assets/story/04-joseon.jpg",
+    image: "assets/story/04-joseon.webp",
     imagePosition: "center 5%",
     imageFit: "cover",
     eyebrow: "فصل چهارم · بازآفرینی افسانه‌ی چون‌هِیانگ",
@@ -90,7 +90,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "knight-princess",
-    image: "assets/story/05-medieval.jpg",
+    image: "assets/story/05-medieval.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل پنجم · بازآفرینی تِریستان و ایزولْد",
     title: "معجونی که فقط حقیقت را آشکار کرد",
@@ -111,7 +111,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "enchanted-world",
-    image: "assets/story/06-fantasy.jpg",
+    image: "assets/story/06-fantasy.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل ششم · افسانه‌ی الف و جادوگر",
     title: "جادویی که زمان حریفش نشد",
@@ -132,7 +132,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "cyberpunk",
-    image: "assets/story/07-cyberpunk.jpg",
+    image: "assets/story/07-cyberpunk.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل هفتم · افسانه‌ی دزد خاطره‌ها",
     title: "آخرین خاطره‌ای که شهر نتوانست پاک کند",
@@ -153,7 +153,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "zombie-world",
-    image: "assets/story/08-zombie.jpg",
+    image: "assets/story/08-zombie.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل هشتم · افسانه‌ی آخرین فرکانس",
     title: "صدایی که ثابت کرد شهر هنوز زنده است",
@@ -174,7 +174,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "spider-verse",
-    image: "assets/story/09-spider-rooftop.jpg",
+    image: "assets/story/09-spider-rooftop.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل نهم · بازآفرینی یک رویداد کانونی",
     title: "دو نفری که قانون مولتی‌ورس را نپذیرفتند",
@@ -195,7 +195,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "wild-west",
-    image: "assets/story/10-outlaw.jpg",
+    image: "assets/story/10-outlaw.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل دهم · افسانه‌ی یاغی و جایزه‌بگیر",
     title: "آخرین قطار به سمت غروب",
@@ -216,7 +216,7 @@ window.LOVE_STORIES = [
   },
   {
     id: "gta-vi",
-    image: "assets/story/11-vice-city.jpg",
+    image: "assets/story/11-vice-city.webp",
     imagePosition: "center 5%",
     eyebrow: "فصل یازدهم · بازآفرینی جِیسون و لوسیا",
     title: "یک سرقت ناموفق و دو نفری که به هم اعتماد کردند",

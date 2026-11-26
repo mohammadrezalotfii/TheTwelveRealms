@@ -53,7 +53,6 @@
       slide.style.setProperty('--slide-accent', story.theme.accent);
       slide.style.setProperty('--slide-ink', story.theme.ink);
       slide.style.setProperty('--slide-muted', story.theme.muted);
-      slide.style.setProperty('--story-image', story.image ? `url("${story.image}")` : 'none');
       slide.style.setProperty('--image-position', story.imagePosition || 'center');
       slide.style.setProperty('--image-fit', story.imageFit || 'cover');
 

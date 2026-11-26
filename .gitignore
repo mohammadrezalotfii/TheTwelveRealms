@@ -1,3 +1,7 @@
 Thumbs.db
 .DS_Store
 *.log
+
+# High-resolution source artwork stays local; optimized WebP files are deployed.
+assets/story/*.jpg
+assets/story/*.png
