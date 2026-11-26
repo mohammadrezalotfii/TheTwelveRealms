@@ -32,6 +32,9 @@
   let musicEnabled = true;
   let activeAudio = null;
   let activeAudioIndex = -1;
+  let preloadedAudio = null;
+  let preloadedAudioIndex = -1;
+  let imagePreloadTimer = 0;
   const targetMusicVolume = 0.52;
 
   const faNumber = (number) => new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(number);
@@ -76,12 +79,14 @@
         visual.append(frame);
       } else {
         const image = document.createElement('img');
-        image.src = story.image;
+        if (index === 0) image.src = story.image;
+        else image.dataset.src = story.image;
         image.alt = `تصویر فصل ${faNumber(index + 1)}: ${story.title}`;
         image.width = 1360;
         image.height = 1700;
         image.decoding = 'async';
-        image.loading = index < 2 ? 'eager' : 'lazy';
+        image.loading = index === 0 ? 'eager' : 'lazy';
+        if (index === 0) image.fetchPriority = 'high';
         visual.append(image);
       }
 
@@ -120,12 +125,17 @@
     themeMeta.setAttribute('content', story.theme.bg);
   };
 
+  const loadStoryImage = (index) => {
+    const image = track.children[index]?.querySelector('img[data-src]');
+    if (!image?.dataset.src) return;
+    image.src = image.dataset.src;
+    delete image.dataset.src;
+  };
+
   const preloadAround = (index) => {
-    [index - 1, index + 1].forEach((candidate) => {
-      if (!stories[candidate]?.image) return;
-      const image = new Image();
-      image.src = stories[candidate].image;
-    });
+    loadStoryImage(index);
+    window.clearTimeout(imagePreloadTimer);
+    imagePreloadTimer = window.setTimeout(() => loadStoryImage(index + 1), 1600);
   };
 
   const setMusicUI = (state = 'ready') => {
@@ -168,6 +178,29 @@
     else fadeAudio(audio, 0, 650, finish);
   };
 
+  const clearPreloadedAudio = () => {
+    discardAudio(preloadedAudio, true);
+    preloadedAudio = null;
+    preloadedAudioIndex = -1;
+  };
+
+  const preloadNextAudio = (index) => {
+    if (!musicEnabled || !started) return;
+    const nextIndex = index + 1;
+    const nextSource = stories[nextIndex]?.audio;
+    if (!nextSource || preloadedAudioIndex === nextIndex) return;
+
+    clearPreloadedAudio();
+    const audio = new Audio(nextSource);
+    audio.preload = 'auto';
+    audio.playsInline = true;
+    audio.loop = true;
+    audio.volume = 0;
+    preloadedAudio = audio;
+    preloadedAudioIndex = nextIndex;
+    audio.load();
+  };
+
   const switchStoryAudio = (index) => {
     const source = stories[index]?.audio;
     if (!started || !source) return;
@@ -184,14 +217,26 @@
     if (activeAudio && activeAudioIndex === index) {
       if (activeAudio.ended) activeAudio.currentTime = 0;
       setMusicUI(activeAudio.readyState < 3 ? 'loading' : 'playing');
-      activeAudio.play().then(() => fadeAudio(activeAudio, targetMusicVolume, 700)).catch(() => setMusicUI('ready'));
+      activeAudio.play().then(() => {
+        fadeAudio(activeAudio, targetMusicVolume, 700);
+        if (activeAudio.readyState >= 4) preloadNextAudio(index);
+      }).catch(() => setMusicUI('ready'));
       return;
     }
 
     const previousAudio = activeAudio;
-    const audio = new Audio(source);
-    audio.preload = 'none';
+    let audio;
+    if (preloadedAudio && preloadedAudioIndex === index) {
+      audio = preloadedAudio;
+      preloadedAudio = null;
+      preloadedAudioIndex = -1;
+    } else {
+      clearPreloadedAudio();
+      audio = new Audio(source);
+      audio.preload = 'none';
+    }
     audio.playsInline = true;
+    audio.loop = true;
     audio.volume = 0;
     activeAudio = audio;
     activeAudioIndex = index;
@@ -205,9 +250,14 @@
     audio.addEventListener('waiting', () => {
       if (audio === activeAudio && musicEnabled) setMusicUI('loading');
     });
-    audio.addEventListener('ended', () => {
-      if (audio === activeAudio) setMusicUI('ready');
+    audio.addEventListener('progress', () => {
+      if (audio !== activeAudio || !musicEnabled || !audio.buffered.length) return;
+      const bufferedUntil = audio.buffered.end(audio.buffered.length - 1);
+      if (bufferedUntil - audio.currentTime >= 45) preloadNextAudio(index);
     });
+    audio.addEventListener('canplaythrough', () => {
+      if (audio === activeAudio && musicEnabled) preloadNextAudio(index);
+    }, { once: true });
     audio.addEventListener('error', () => {
       if (audio === activeAudio) setMusicUI('ready');
     });
@@ -218,6 +268,7 @@
 
   const stopStoryAudio = (immediate = false) => {
     discardAudio(activeAudio, immediate);
+    clearPreloadedAudio();
     activeAudio = null;
     activeAudioIndex = -1;
     setMusicUI('ready');
@@ -228,6 +279,7 @@
     setMusicUI(musicEnabled ? 'loading' : 'ready');
     if (musicEnabled) switchStoryAudio(current);
     else if (activeAudio) {
+      clearPreloadedAudio();
       const audio = activeAudio;
       fadeAudio(audio, 0, 450, () => audio.pause());
     }
