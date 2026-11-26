@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>آزمون‌های LoveLetter</title>
+  <style>
+    body{margin:0;padding:2rem;font-family:Tahoma,sans-serif;background:#f3ead7;color:#3e2c26}
+    main{max-width:760px;margin:auto}h1{margin:0 0 .5rem}.summary{padding:1rem 1.2rem;background:#fffaf0;border:1px solid #d8c6a8}
+    ol{padding:0;list-style:none;display:grid;gap:.55rem}.pass,.fail{padding:.7rem 1rem;background:#fff;border-right:4px solid}
+    .pass{border-color:#39805e}.fail{border-color:#a6293f}iframe{position:fixed;width:390px;height:844px;left:-10000px;top:0;border:0}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>آزمون‌های خودکار نامه</h1>
+    <p class="summary" id="summary">در حال اجرا...</p>
+    <ol id="results"></ol>
+  </main>
+  <iframe id="app-frame" src="index.html" title="نسخه‌ی آزمایشی سایت"></iframe>
+  <script src="tests/browser-tests.js"></script>
+</body>
+</html>

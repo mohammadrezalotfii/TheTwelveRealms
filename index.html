@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#221827" />
+    <meta name="description" content="دوازده جهان، دوازده قصه — از طرف رضا" />
+    <title>دوازده جهان، یک عسل</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="stories.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#story-title">رفتن به داستان</a>
+
+    <div class="story-app" id="story-app">
+      <section class="intro" id="intro" aria-labelledby="intro-title">
+        <div class="intro__image" aria-hidden="true"></div>
+        <div class="intro__shade" aria-hidden="true"></div>
+        <div class="intro__content">
+          <p class="intro__eyebrow">یک سفر کوچولو برای پرنسس زندگیم</p>
+          <h1 id="intro-title">دوازده جهان،<br /><em>یک نفرِ همیشگی</em></h1>
+          <p class="intro__lead">
+            هر دنیا یه قصه داره اما تو همشون یه اصل ثابته، من بازم تو رو پیدا
+            می‌کنم ♡
+          </p>
+          <button class="start-button" id="start-story" type="button">
+            قصه‌مون رو شروع کن
+          </button>
+          <p class="intro__from">از طرف رضا کوچولو، برای نور چشمام ♡</p>
+        </div>
+      </section>
+
+      <main class="reader" id="reader" aria-hidden="true">
+        <header class="reader__header">
+          <button
+            class="brand"
+            id="restart-story"
+            type="button"
+            aria-label="بازگشت به صفحه اول"
+          >
+            شروع دوباره قصه‌ها
+          </button>
+          <p class="chapter-count">
+            فصل <b id="current-number">۱</b> از
+            <span id="total-number">۱۲</span>
+          </p>
+        </header>
+
+        <div
+          class="story-viewport"
+          id="story-viewport"
+          tabindex="0"
+          aria-label="داستان‌های تصویری؛ برای جابه‌جایی به چپ یا راست بکشید"
+        >
+          <div class="story-track" id="story-track"></div>
+          <p class="swipe-tip" id="swipe-tip">با انگشت ورق بزن</p>
+        </div>
+
+        <nav class="reader__controls" aria-label="جابه‌جایی بین فصل‌ها">
+          <button
+            class="nav-button nav-button--next"
+            id="next-story"
+            type="button"
+          >
+            فصل بعد
+          </button>
+          <div
+            class="progress-dots"
+            id="progress-dots"
+            role="tablist"
+            aria-label="فصل‌های داستان"
+          ></div>
+          <button
+            class="nav-button nav-button--previous"
+            id="previous-story"
+            type="button"
+          >
+            فصل قبل
+          </button>
+        </nav>
+      </main>
+
+      <section
+        class="reality-ending"
+        id="reality-ending"
+        aria-labelledby="reality-title"
+        aria-hidden="true"
+      >
+        <div class="reality-ending__inner">
+          <p class="reality-ending__eyebrow">و اما آخرین دنیا...</p>
+          <h2 id="reality-title" tabindex="-1">دنیای واقعیِ خودمون</h2>
+
+          <div class="reality-ending__copy">
+            <p>همه‌ی این دنیاها قشنگ بودن...</p>
+            <p>
+              توی یکی‌شون ملکه بودی، توی یکی پرنسس؛ یک‌جا قهرمان بودی و
+              یک‌جا تنها امیدِ آخر دنیا.
+            </p>
+            <p>
+              ولی حقیقت اینه که من برای دوست‌داشتنت به تخت جمشید، قصر،
+              مولتی‌ورس یا یک شهر پر از نورهای نئونی احتیاج ندارم.
+            </p>
+            <p>من تو رو همین‌جا دوست دارم؛ توی همین دنیای معمولی خودمون.</p>
+            <p>
+              وقتی خسته‌ای، وقتی ساکتی، وقتی خوشحالی، وقتی به خودت شک می‌کنی
+              و حتی وقت‌هایی که شاید من نتونستم اون‌طور که باید نشونت بدم
+              چقدر برام ارزشمندی.
+            </p>
+            <p>
+              من تلاشت رو می‌بینم، عسل. روزهایی رو که با خستگی ادامه می‌دی
+              می‌بینم. مهربونی‌هات، نگرانی‌هات، لبخندت و قلب قشنگی که پشت
+              همه‌شون پنهانه رو می‌بینم.
+            </p>
+            <p>
+              شاید نتونم برات دوازده جهان واقعی بسازم، اما دلم می‌خواد توی
+              همین یک جهان، آدمی باشم که کنارش احساس امنیت می‌کنی؛ کسی که
+              خستگی‌هات پیشش سبک‌تر می‌شن و هیچ‌وقت باعث نمی‌شه فکر کنی کافی
+              نیستی.
+            </p>
+            <p>
+              اگر هزار بار دیگه هم بین هزار دنیا گم بشم، باز دنبالت می‌گردم.
+              اما خوشبختانه این بار لازم نیست خیلی دور برم...
+            </p>
+            <p class="reality-ending__promise">
+              چون دنیای موردعلاقه‌ی من همین‌جاست؛ هرجایی که تو باشی.
+            </p>
+          </div>
+
+          <div class="future-photo" role="img" aria-label="قاب عکس آینده‌ی رضا و عسل">
+            <span class="future-photo__heart" aria-hidden="true">♡</span>
+            <p class="future-photo__title">جای این عکس هنوز خالیه...</p>
+            <p>
+              چون این یکی رو نمی‌شه ساخت یا از جایی پیدا کرد.<br />
+              باید یک روز واقعاً کنار هم بایستیم و خودمون بگیریمش.
+            </p>
+            <p class="future-photo__waiting">
+              بی‌صبرانه منتظر روزی‌ام که فاصله تموم بشه و این قاب رو با
+              خاطره‌ی خودمون پُر کنیم.
+            </p>
+          </div>
+
+          <p class="reality-ending__signoff">
+            دوستت دارم، عسلی.<br />از طرف رضا کوچولوت ♡
+          </p>
+          <button class="ending-restart" id="ending-restart" type="button">
+            قصه‌هامون رو دوباره بخونیم
+          </button>
+        </div>
+      </section>
+
+      <p class="live-region" id="live-region" aria-live="polite"></p>
+    </div>
+
+    <noscript>برای دیدن این قصه، جاوااسکریپت مرورگر باید روشن باشد.</noscript>
+  </body>
+</html>
